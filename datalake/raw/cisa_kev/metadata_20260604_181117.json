@@ -1,0 +1,37 @@
+{
+    "timestamp": "2026-06-04 18:11:17.227588",
+    "files": {
+        "csv": "datalake/raw/cisa_kev/cisa_kev_20260604_181117.csv",
+        "json": "datalake/raw/cisa_kev/cisa_kev_20260604_181117.json",
+        "parquet": "datalake/raw/cisa_kev/cisa_kev_20260604_181117.parquet"
+    },
+    "quality": {
+        "total_records": 1611,
+        "missing_values": {
+            "cveID": 0,
+            "vendorProject": 0,
+            "product": 0,
+            "vulnerabilityName": 0,
+            "dateAdded": 0,
+            "shortDescription": 0,
+            "requiredAction": 0,
+            "dueDate": 0,
+            "knownRansomwareCampaignUse": 0,
+            "notes": 0,
+            "cwes": 0
+        },
+        "columns": [
+            "cveID",
+            "vendorProject",
+            "product",
+            "vulnerabilityName",
+            "dateAdded",
+            "shortDescription",
+            "requiredAction",
+            "dueDate",
+            "knownRansomwareCampaignUse",
+            "notes",
+            "cwes"
+        ]
+    }
+}
