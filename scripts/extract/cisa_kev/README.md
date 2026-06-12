@@ -1,38 +1,47 @@
-Projeto Datalake de Cibersegurança
-
+Cybersecurity Datalake Project
 README - BRANCH POC/CISA-KEV
-
-Documentação de Extração e Prova de Conceito
+Extraction and Proof of Concept Documentation
 
 ---
 
-## 1. Identificação da Fonte
+## 1. Source Identification
 
-### 1.1 Nome da Fonte/API
-CISA KEV (Known Exploited Vulnerabilities) - Catálogo de Vulnerabilidades Exploradas Ativamente.
+### 1.1 Source/API Name
+CISA KEV (Known Exploited Vulnerabilities) - Catalog of Actively Exploited Vulnerabilities.
 
-### 1.2 Link da Documentação
+### 1.2 Documentation Link
 [https://www.cisa.gov/known-exploited-vulnerabilities-catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
 
-### 1.3 Autenticação
-Não é necessária chave de API ou qualquer forma de autenticação para o acesso aos dados públicos desta fonte.
+### 1.3 Authentication
+No API key or any form of authentication is required to access the public data from this source.
 
 ---
 
-## 2. Configuração e Ambiente
+## 2. Configuration and Environment
 
-### 2.1 Variáveis de Ambiente
-Não é necessário configurar arquivo `.env` para esta extração específica, uma vez que a fonte não exige credenciais ou tokens de acesso.
+### 2.1 Environment Variables
+It is not necessary to configure a `.env` file for this specific extraction, as the source does not require credentials or access tokens.
 
 ---
 
-## 3. Execução do Script
+## 3. Script Execution
 
-### 3.1 Instruções de Execução
-O script de extração foi desenvolvido em Python e utiliza bibliotecas para download, validação e persistência de dados. Certifique-se de que as dependências listadas no `requirements.txt` do projeto estejam instaladas.
+### 3.1 Execution Instructions
+First, create a virtual environment, activate it, and install required packages:
+```
+python3 -m venv .venv
+```
+```
+source ./.venv/bin/activate
+```
+Then, install the required packages:
+```
+pip install -r requirements.txt
+```
+The extraction script was developed in Python and uses libraries for data download, validation, and persistence. Ensure that the dependencies listed in the project's `requirements.txt` are installed.
 
-### 3.2 Exemplo de Comando
-Para executar a extração e o processamento inicial da PoC, utilize o comando abaixo a partir da raiz do projeto:
+### 3.2 Command Example
+To execute the extraction and initial PoC processing, use the command below from the project root:
 
 ```bash
 python scripts/extract/cisa_kev_poc.py
@@ -40,35 +49,36 @@ python scripts/extract/cisa_kev_poc.py
 
 ---
 
-## 4. Detalhes Técnicos da Extração
+## 4. Technical Extraction Details
 
-### 4.1 Explicação dos Dados e Processamento
-O script realiza o download automatizado do arquivo JSON oficial mantido pela CISA. Após o download, o sistema executa as seguintes etapas:
-1. **Validação:** Verifica a integridade do esquema e a presença de campos obrigatórios.
-2. **Qualidade:** Gera um relatório de qualidade (metadados) contendo contagem de registros e verificação de valores nulos.
-3. **Persistência:** Salva os dados em múltiplos formatos para garantir compatibilidade com as próximas camadas do Datalake.
+### 4.1 Data and Processing Explanation
+The script performs the automated download of the official JSON file maintained by CISA. After the download, the system executes the following steps:
 
-### 4.2 Armazenamento e Formatos
-- **Local de salvamento:** Os arquivos são armazenados automaticamente no diretório `datalake/raw/cisa_kev/`.
-- **Arquivo baixado:** O script consome o arquivo JSON original da CISA.
-- **Formatos de saída:** O dado é convertido e salvo localmente em **CSV**, **JSON** e **Parquet**.
-- **Descompactação:** Não é necessária, pois o arquivo é fornecido em formato plano.
-- **Tamanho do arquivo:** Pequeno (aproximadamente alguns MBs), permitindo processamento rápido em memória.
+1. **Validation:** Verifies schema integrity and the presence of mandatory fields.
+2. **Quality:** Generates a quality report (metadata) containing record counts and null value verification.
+3. **Persistence:** Saves data in multiple formats to ensure compatibility with the next Datalake layers.
+
+### 4.2 Storage and Formats
+- **Saving location:** Files are automatically stored in the `datalake/raw/cisa_kev/` directory.
+- **Downloaded file:** The script consumes the original JSON file from CISA.
+- **Output formats:** Data is converted and saved locally in **CSV**, **JSON**, and **Parquet**.
+- **Decompression:** Not necessary, as the file is provided in flat format.
+- **File size:** Small (approximately a few MBs), allowing fast in-memory processing.
 
 ---
 
-## 5. Estrutura e Limitações
+## 5. Structure and Limitations
 
-### 5.1 Colunas Relevantes
-As seguintes colunas foram identificadas como fundamentais para o núcleo do Datalake:
-- `cveID`: Identificador único da vulnerabilidade (Chave primária).
-- `vendorProject`: Empresa ou projeto responsável pelo software.
-- `product`: Nome do produto afetado.
-- `dateAdded`: Data em que a vulnerabilidade foi adicionada ao catálogo de exploração ativa.
-- `knownRansomwareCampaignUse`: Indicador de uso conhecido em campanhas de Ransomware.
-- `vulnerabilityName`: Título descritivo da falha.
-- `shortDescription`: Resumo técnico da vulnerabilidade.
+### 5.1 Relevant Columns
+The following columns were identified as fundamental to the Datalake core:
+- `cveID`: Unique vulnerability identifier (Primary key).
+- `vendorProject`: Company or project responsible for the software.
+- `product`: Name of the affected product.
+- `dateAdded`: Date the vulnerability was added to the active exploitation catalog.
+- `knownRansomwareCampaignUse`: Indicator of known use in Ransomware campaigns.
+- `vulnerabilityName`: Descriptive title of the flaw.
+- `shortDescription`: Technical summary of the vulnerability.
 
-### 5.2 Atualização e Limites
-- **Atualização periódica:** Sim, a base é atualizada continuamente pela CISA conforme novas explorações são confirmadas.
-- **Limitações conhecidas:** Não há rate-limit estrito para o endpoint público. A fonte não utiliza paginação, fornecendo todos os dados em um arquivo único consolidado.
+### 5.2 Update and Limits
+- **Periodic update:** Yes, the database is continuously updated by CISA as new exploitations are confirmed.
+- **Known limitations:** There is no strict rate-limit for the public endpoint. The source does not use pagination, providing all data in a single consolidated file.
